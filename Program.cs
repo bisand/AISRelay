@@ -20,23 +20,21 @@ namespace AISRelay
             var localListenerEndpoint = new IPEndPoint(IPAddress.Any, listenPort);
             var localPublisherEndpoint = new IPEndPoint(IPAddress.Any, publishPort);
             var marineTrafficEndpoint = new IPEndPoint(IPAddress.Parse("5.9.207.224"), 11089);
-            using (UdpClient localListener = new UdpClient(localListenerEndpoint))
+            using UdpClient localListener = new UdpClient(localListenerEndpoint);
+            while (!done)
             {
-                while (!done)
+                try
                 {
-                    try
-                    {
-                        byte[] receivedData = localListener.Receive(ref localListenerEndpoint);
-                        using (var marineTrafficClient = new UdpClient())
-                            marineTrafficClient.Send(receivedData, receivedData.Length, marineTrafficEndpoint);
-                        using (var localPublisherClient = new UdpClient())
-                            localListener.Send(receivedData, receivedData.Length, localPublisherEndpoint);
-                        Console.WriteLine("{0:yyyy-MM-dd HH:mm:ss} [DEBUG] {1}", DateTime.Now, Encoding.ASCII.GetString(receivedData).TrimEnd('\n'));
-                    }
-                    catch (System.Exception ex)
-                    {
-                        Console.WriteLine("{0:yyyy-MM-dd HH:mm:ss} [ERROR] {1}", DateTime.Now, ex);
-                    }
+                    byte[] receivedData = localListener.Receive(ref localListenerEndpoint);
+                    using (var marineTrafficClient = new UdpClient())
+                        marineTrafficClient.Send(receivedData, receivedData.Length, marineTrafficEndpoint);
+                    using (var localPublisherClient = new UdpClient())
+                        localListener.Send(receivedData, receivedData.Length, localPublisherEndpoint);
+                    Console.WriteLine("{0:yyyy-MM-dd HH:mm:ss} [DEBUG] {1}", DateTime.Now, Encoding.ASCII.GetString(receivedData).TrimEnd('\n'));
+                }
+                catch (System.Exception ex)
+                {
+                    Console.WriteLine("{0:yyyy-MM-dd HH:mm:ss} [ERROR] {1}", DateTime.Now, ex);
                 }
             }
         }
