@@ -27,13 +27,29 @@ namespace AISRelay
                 {
                     byte[] receivedData = localListener.Receive(ref localListenerEndpoint);
                     using (var marineTrafficClient = new UdpClient())
-                        marineTrafficClient.Send(receivedData, receivedData.Length, marineTrafficEndpoint);
+                        marineTrafficClient.BeginSend(receivedData, receivedData.Length, marineTrafficEndpoint, UdpClientSendCallback, marineTrafficClient);
                     using (var localPublisherClient = new UdpClient())
                     {
                         localPublisherClient.EnableBroadcast = true;
-                        localPublisherClient.Send(receivedData, receivedData.Length, localPublisherEndpoint);
+                        localPublisherClient.BeginSend(receivedData, receivedData.Length, localPublisherEndpoint, UdpClientSendCallback, localPublisherClient);
                     }
                     Console.WriteLine("{0:yyyy-MM-dd HH:mm:ss} [DEBUG] {1}", DateTime.Now, Encoding.ASCII.GetString(receivedData).TrimEnd('\n'));
+                }
+                catch (System.Exception ex)
+                {
+                    Console.WriteLine("{0:yyyy-MM-dd HH:mm:ss} [ERROR] {1}", DateTime.Now, ex);
+                }
+            }
+        }
+
+        private static void UdpClientSendCallback(IAsyncResult ar)
+        {
+            if (ar != null && ar.AsyncState is UdpClient)
+            {
+                try
+                {
+                    (ar.AsyncState as UdpClient).EndSend(ar);
+                    (ar.AsyncState as UdpClient).Close();
                 }
                 catch (System.Exception ex)
                 {
