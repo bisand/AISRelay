@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using CommandLine.Text;
 
 namespace AISRelay
 {
@@ -9,6 +10,12 @@ namespace AISRelay
     {
         static void Main(string[] args)
         {
+            var result = CommandLine.Parser.Default.ParseArguments<Options>(args);
+            // if (!result.Errors.Any())
+            // {
+            //     // Values are available here
+            //     if (result.Value.Verbose) Console.WriteLine("Filenames: {0}", string.Join(",", result.Value.InputFiles.ToArray()));
+            // }
             Console.WriteLine("AIS Relay v0.1");
             Console.WriteLine("Listening for AIS messages on UDP port 10110");
             Console.WriteLine("Publishing to MarineTraffic: 5.9.207.224:11089");
