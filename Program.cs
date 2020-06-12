@@ -41,8 +41,9 @@ namespace AISRelay
             }
             Console.WriteLine(string.Format("AIS Relay {0}", version));
             Console.WriteLine("Listening for AIS messages on UDP port {0}", options.ListenUdpPort);
-            Console.WriteLine("Publishing to MarineTraffic: {0}:{1}", options.MarineTrafficHost, options.MarineTrafficPort);
             Console.WriteLine("Broadcasting UDP messages on port {0}", options.BroadcastPort);
+            if (!string.IsNullOrWhiteSpace(options.MarineTrafficHost) && options.MarineTrafficPort != 0)
+                Console.WriteLine("Publishing to MarineTraffic: {0}:{1}", options.MarineTrafficHost, options.MarineTrafficPort);
 
             bool done = false;
             var localListenerEndpoint = new IPEndPoint(IPAddress.Any, options.ListenUdpPort);
