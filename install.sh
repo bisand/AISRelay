@@ -12,19 +12,19 @@ export PATH="/usr/share/dotnet":"$PATH"
 # Install AIS Relay
 dotnet publish --output /usr/share/aisrelay
 
-apt install -y git build-essential cmake
+apt install -y git build-essential
 
 # Clone and install RTL-SDR
 git clone git://git.osmocom.org/rtl-sdr.git
 cd rtl-sdr/
-mkdir build
-cd build
-cmake ../ -DINSTALL_UDEV_RULES=ON
+autoreconf -i
+./configure
 make
-sudo make install
+sudo make install-udev-rules
 sudo ldconfig
 
 # Clone and install RTL-AIS
+cd ..
 git clone https://github.com/dgiardini/rtl-ais 
 cd rtl-ais
 make
