@@ -25,6 +25,10 @@ sudo make install
 sudo ldconfig
 cd ../..
 
+sed -i.bak 's/^\(prefix=\).*/\1\/usr/' /usr/local/lib/pkgconfig/librtlsdr.pc
+sed -i.bak 's/^\(libdir=\).*/\1${prefix}\/lib/' /usr/local/lib/pkgconfig/librtlsdr.pc
+sed -i.bak 's/^\(includedir=\).*/\1${prefix}\/include/' /usr/local/lib/pkgconfig/librtlsdr.pc
+
 # Clone and install RTL-AIS
 git clone https://github.com/dgiardini/rtl-ais 
 cd rtl-ais
