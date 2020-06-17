@@ -25,6 +25,7 @@ sudo make install
 sudo ldconfig
 cd ../..
 
+# Adding include and lib path to prevent build errors on rtl-ais
 sed -i.bak 's/^\(prefix=\).*/\1\/usr/' /usr/local/lib/pkgconfig/librtlsdr.pc
 sed -i.bak 's/^\(libdir=\).*/\1${prefix}\/lib/' /usr/local/lib/pkgconfig/librtlsdr.pc
 sed -i.bak 's/^\(includedir=\).*/\1${prefix}\/include/' /usr/local/lib/pkgconfig/librtlsdr.pc
@@ -34,3 +35,6 @@ git clone https://github.com/dgiardini/rtl-ais
 cd rtl-ais
 make
 make install
+
+# Cleaning up
+rm -Rf rtl-* dotnet-install.sh*
