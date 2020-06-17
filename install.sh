@@ -12,13 +12,7 @@ export PATH="/usr/share/dotnet":"$PATH"
 # Install AIS Relay
 dotnet publish --output /usr/share/aisrelay
 
-apt install -y git build-essential autotools-dev autoconf libtool libusb-dev
-
-git clone https://github.com/libusb/libusb.git
-cd libusb
-make
-make install
-cd ..
+apt install -y git build-essential autotools-dev autoconf libtool libusb-1.0-0-dev
 
 # Clone and install RTL-SDR
 git clone git://git.osmocom.org/rtl-sdr.git
