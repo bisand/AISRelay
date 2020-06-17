@@ -35,6 +35,7 @@ git clone https://github.com/dgiardini/rtl-ais
 cd rtl-ais
 make
 make install
+cd ..
 
 # Cleaning up
 rm -Rf rtl-* dotnet-install.sh*
