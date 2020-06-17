@@ -14,6 +14,12 @@ dotnet publish --output /usr/share/aisrelay
 
 apt install -y git build-essential autotools-dev autoconf libtool libusb-dev
 
+git clone https://github.com/libusb/libusb.git
+cd libusb
+make
+make install
+cd ..
+
 # Clone and install RTL-SDR
 git clone git://git.osmocom.org/rtl-sdr.git
 cd rtl-sdr/
@@ -22,9 +28,9 @@ autoreconf -i
 make
 sudo make install-udev-rules
 sudo ldconfig
+cd ..
 
 # Clone and install RTL-AIS
-cd ..
 git clone https://github.com/dgiardini/rtl-ais 
 cd rtl-ais
 make
