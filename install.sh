@@ -23,7 +23,7 @@ cmake ../ -DINSTALL_UDEV_RULES=ON
 make
 sudo make install
 sudo ldconfig
-cd ..
+cd ../..
 
 # Clone and install RTL-AIS
 git clone https://github.com/dgiardini/rtl-ais 
