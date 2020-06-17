@@ -10,7 +10,7 @@ cd /tmp/aisrelay
 # Install .net core
 wget https://dotnet.microsoft.com/download/dotnet-core/scripts/v1/dotnet-install.sh
 chmod +x dotnet-install.sh
-./dotnet-install.sh --install-dir /usr/share/dotnet --channel LTS --version latest --no-path
+./dotnet-install.sh --architecture arm --install-dir /usr/share/dotnet --channel LTS --version latest --no-path
 
 # Install AIS Relay
 /usr/share/dotnet/dotnet publish --output /usr/share/aisrelay
