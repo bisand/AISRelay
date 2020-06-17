@@ -2,7 +2,7 @@
 echo "Starting AIS installation..."
 
 # Install .net core
-wget https://dotnet.microsoft.com/download/dotnet-core/scripts/v1/dotnet-install.sh
+wget -O https://dotnet.microsoft.com/download/dotnet-core/scripts/v1/dotnet-install.sh
 chmod +x dotnet-install.sh
 ./dotnet-install.sh --install-dir /usr/share/dotnet --channel LTS --version latest --no-path
 
