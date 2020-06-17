@@ -12,7 +12,7 @@ export PATH="/usr/share/dotnet":"$PATH"
 # Install AIS Relay
 dotnet publish --output /usr/share/aisrelay
 
-apt install -y git build-essential
+apt install -y git build-essential autotools-dev autoconf
 
 # Clone and install RTL-SDR
 git clone git://git.osmocom.org/rtl-sdr.git
