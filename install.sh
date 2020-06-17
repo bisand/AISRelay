@@ -1,23 +1,21 @@
 #!/bin/sh
+
 echo "Starting AIS installation..."
 
-startfolder=$(pwd)
-
-echo $(startfolder)
-exit 0
-
 # Switch to tmp directory
-mkdir /tmp/ais
-cd /tmp/ais
+rm -Rf /tmp/aisrelay
+cp -R . /tmp/aisrelay
+cd /tmp/aisrelay
 
 # Install .net core
 wget https://dotnet.microsoft.com/download/dotnet-core/scripts/v1/dotnet-install.sh
 chmod +x dotnet-install.sh
-./dotnet-install.sh --channel LTS --version latest
+./dotnet-install.sh --install-dir /usr/share/dotnet --channel LTS --version latest --no-path
 
 # Install AIS Relay
-dotnet publish --output /usr/share/aisrelay
+/usr/share/dotnet/dotnet publish --output /usr/share/aisrelay
 
+# Install prerequisites.
 apt install -y git cmake build-essential libusb-1.0-0-dev
 
 # Clone and install RTL-SDR
@@ -51,7 +49,7 @@ After=network.target
 StartLimitIntervalSec=0
 
 [Service]
-WorkingDirectory=/home/bisand/ais/aisrelay
+WorkingDirectory=/tmp
 ExecStart=/usr/local/bin/rtl_ais -p197 -g49.60
 Restart=always
 # Restart service after 5 seconds if the dotnet service crashes:
@@ -72,8 +70,8 @@ After=network.target
 StartLimitIntervalSec=0
 
 [Service]
-WorkingDirectory=/home/bisand/ais/aisrelay
-ExecStart=/home/bisand/ais/aisrelay/aisrelay --listen 10110 --broadcast 2947 --mt-host 5.9.207.224 --mt-port 11089
+WorkingDirectory=/usr/share/aisrelay
+ExecStart=/usr/share/aisrelay/aisrelay --listen 10110 --broadcast 2947 --mt-host 5.9.207.224 --mt-port 11089
 Restart=always
 # Restart service after 10 seconds if the dotnet service crashes:
 RestartSec=10
@@ -94,4 +92,4 @@ systemctl start rtl_ais
 systemctl start aisrelay
 
 # Cleaning up
-rm -Rf /tmp/ais
+rm -Rf /tmp/aisrelay
