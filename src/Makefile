@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall -Werror -Wextra -lboost_system -pthread
+CXXFLAGS = -Wall -Werror -Wextra -lboost_system -pthread -pedantic -std=c++17 -g
 LDFLAGS =  -fsanitize=address
 
 SRC = *.cpp
@@ -9,7 +9,7 @@ EXEC = aisrelay
 all: $(EXEC)
 
 $(EXEC): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $@ $(OBJ) $(LBLIBS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LBLIBS)
 
 clean:
-	rm -rf $(OBJ) $(EXEC)
+	rm -rf $(EXEC)

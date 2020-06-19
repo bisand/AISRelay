@@ -10,7 +10,6 @@ void AISRelay::say()
 {
     try
     {
-
         boost::asio::io_service io_service;
 
         udp::endpoint local_endpoint = boost::asio::ip::udp::endpoint(boost::asio::ip::address::from_string("0.0.0.0"), boost::lexical_cast<int>(2947));
