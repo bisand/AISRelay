@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall -Werror -Wextra -lboost_thread -pthread -std=c++17 -ggdb3 -fsanitize=address
+CXXFLAGS = -Wall -Werror -Wextra -lboost_system -pthread
 LDFLAGS =  -fsanitize=address
 
 SRC = *.cpp

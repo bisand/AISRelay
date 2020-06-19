@@ -1,6 +1,6 @@
 #include <iostream>
 
-class HelloWorld
+class AISRelay
 {
 public:
     void say();

@@ -1,8 +1,8 @@
-#include "HelloWorld.hpp"
+#include "AISRelay.hpp"
 
 int main()
 {
-    HelloWorld world;
+    AISRelay world;
     world.say();
     return 0;
 }
