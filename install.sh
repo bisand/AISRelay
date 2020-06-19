@@ -7,14 +7,6 @@ rm -Rf /tmp/aisrelay
 cp -R . /tmp/aisrelay
 cd /tmp/aisrelay
 
-# Install .net core
-wget https://dotnet.microsoft.com/download/dotnet-core/scripts/v1/dotnet-install.sh
-chmod +x dotnet-install.sh
-./dotnet-install.sh --architecture arm --install-dir /usr/share/dotnet --channel LTS --version latest --no-path
-
-# Install AIS Relay
-/usr/share/dotnet/dotnet publish --output /usr/share/aisrelay
-
 # Install prerequisites.
 apt install -y git cmake build-essential libusb-1.0-0-dev
 
@@ -70,8 +62,8 @@ After=network.target
 StartLimitIntervalSec=0
 
 [Service]
-WorkingDirectory=/usr/share/aisrelay
-ExecStart=/usr/share/aisrelay/aisrelay --listen 10110 --broadcast 2947 --mt-host 5.9.207.224 --mt-port 11089
+WorkingDirectory=/tmp
+ExecStart=/usr/local/bin/aisrelay --listen 10110 --broadcast 2947 --publish-endpoints 5.9.207.224:11089|
 Restart=always
 # Restart service after 10 seconds if the dotnet service crashes:
 RestartSec=10
