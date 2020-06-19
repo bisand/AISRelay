@@ -3,5 +3,5 @@
 class AISRelay
 {
 public:
-    void say();
+    void start();
 };

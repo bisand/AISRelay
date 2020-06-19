@@ -2,7 +2,7 @@
 
 int main()
 {
-    AISRelay world;
-    world.say();
+    AISRelay aisrelay;
+    aisrelay.start();
     return 0;
 }

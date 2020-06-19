@@ -6,7 +6,7 @@
 
 using boost::asio::ip::udp;
 
-void AISRelay::say()
+void AISRelay::start()
 {
     try
     {

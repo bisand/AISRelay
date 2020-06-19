@@ -1,6 +1,6 @@
 CXX = g++
-CXXFLAGS = -Wall -Werror -Wextra -lboost_system -pthread -pedantic -std=c++17 -g
-LDFLAGS =  -fsanitize=address
+CXXFLAGS = -Wall -lboost_system -pthread
+LDFLAGS =
 
 SRC = *.cpp
 OBJ = $(SRC:.cc=.o)
