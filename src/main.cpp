@@ -1,6 +1,6 @@
 #include "AISRelay.hpp"
 
-int main()
+int main(int argc, char** argv)
 {
     AISRelay aisrelay;
     aisrelay.start();
