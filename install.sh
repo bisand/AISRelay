@@ -8,7 +8,7 @@ cp -R . /tmp/aisrelay
 cd /tmp/aisrelay
 
 # Install prerequisites.
-apt install -y git cmake build-essential libusb-1.0-0-dev
+apt install -y git cmake build-essential libusb-1.0-0-dev libboost-system-dev libboost-program-options-dev
 
 # Clone and install RTL-SDR
 git clone git://git.osmocom.org/rtl-sdr.git

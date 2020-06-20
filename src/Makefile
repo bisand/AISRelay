@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall -lboost_system -pthread
+CXXFLAGS = -Wall -lboost_program_options -lboost_system -pthread
 LDFLAGS =
 
 ifeq ($(PREFIX),)
@@ -17,7 +17,7 @@ EXEC = aisrelay
 all: $(EXEC)
 
 $(EXEC): $(OBJ)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LBLIBS)
+	$(CXX) $(OBJ) $(LBLIBS) -o $@ $(CXXFLAGS) $(LDFLAGS)
 
 clean:
 	rm -rf $(EXEC)

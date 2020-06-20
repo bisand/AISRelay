@@ -22,14 +22,13 @@
             "label": "C/C++: g++ build active file",
             "command": "/usr/bin/g++",
             "args": [
-                "-Wall",
-                "-Werror",
-                "-Wextra",
-                "-lboost_system",
-                "-pthread",
+                "${workspaceFolder}/src/*.cpp",
                 "-o",
                 "${workspaceFolder}/src/aisrelay",
-                "${workspaceFolder}/src/*.cpp",
+                "-Wall",
+                "-lboost_system",
+                "-lboost_program_options",
+                "-pthread",
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <boost/program_options.hpp>
 
 class AISRelay
 {
