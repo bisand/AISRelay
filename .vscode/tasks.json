@@ -28,6 +28,7 @@
                 "-Wall",
                 "-lboost_system",
                 "-lboost_program_options",
+                "-lboost_regex",
                 "-pthread",
             ],
             "options": {
