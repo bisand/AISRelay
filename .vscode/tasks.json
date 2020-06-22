@@ -24,7 +24,7 @@
             "args": [
                 "${workspaceFolder}/src/*.cpp",
                 "-o",
-                "${workspaceFolder}/src/aisrelay",
+                "${workspaceFolder}/bin/aisrelay",
                 "-Wall",
                 "-lboost_system",
                 "-lboost_program_options",

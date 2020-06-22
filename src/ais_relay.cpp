@@ -1,4 +1,4 @@
-#include "AISRelay.hpp"
+#include "ais_relay.hpp"
 
 ais_relay::ais_relay(int listen_port, int broadcast_port, std::vector<std::string> udp_endpoint_addresses)
 {

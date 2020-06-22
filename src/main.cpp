@@ -1,4 +1,4 @@
-#include "AISRelay.hpp"
+#include "ais_relay.hpp"
 
 using namespace boost::program_options;
 
