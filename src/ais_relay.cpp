@@ -40,10 +40,37 @@ ais_relay::ais_relay(int listen_port, int broadcast_port, std::vector<std::strin
             // ONly UDP support
             if (protocol == "udp")
             {
-                udp::resolver resolver(io_service);
-                udp::resolver::query query(udp::v4(), host, boost::lexical_cast<std::string>(port));
-                udp::endpoint peb = *resolver.resolve(query);
-                _publish_endpoints.push_back(peb);
+                std::string port_num = boost::lexical_cast<std::string>(port);
+                boost::asio::io_service ios;
+                boost::asio::ip::udp::resolver::query resolver_query(host, port_num, boost::asio::ip::udp::resolver::query::numeric_service);
+                boost::asio::ip::udp::resolver resolver(ios);
+                boost::system::error_code ec;
+                boost::asio::ip::udp::resolver::iterator it = resolver.resolve(resolver_query, ec);
+
+                if (ec.value() != 0)
+                {
+                    // Failed to resolve the DNS name. Breaking execution.
+                    std::cout << "Failed to resolve a DNS name."
+                              << "Error code = " << ec.value()
+                              << ". Message = " << ec.message();
+
+                    return;
+                }
+
+                boost::asio::ip::udp::resolver::iterator it_end;
+
+                for (; it != it_end; ++it)
+                {
+                    // Here we can access the endpoint like this.
+                    boost::asio::ip::udp::endpoint ep = it->endpoint();
+                    _publish_endpoints.push_back(ep);
+                }
+
+                // udp::resolver resolver(io_service);
+                // udp::resolver::query query(udp::v4(), host, boost::lexical_cast<std::string>(port));
+                // udp::endpoint peb = *resolver.resolve(query);
+
+                // _publish_endpoints.push_back(peb);
 
                 std::cout << "Publishing to " << protocol << "," << host << "," << port << std::endl;
             }
@@ -78,7 +105,7 @@ void ais_relay::start()
                 boost::asio::io_service io_service;
                 udp::endpoint publish_endpoint = _publish_endpoints[i];
                 udp::socket publish_socket(io_service);
-                publish_socket.open();
+                publish_socket.open(udp::v4());
                 publish_socket.send_to(boost::asio::buffer(recv_buf), publish_endpoint);
                 publish_socket.close();
             }
