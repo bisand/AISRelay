@@ -63,7 +63,7 @@ StartLimitIntervalSec=0
 
 [Service]
 WorkingDirectory=/tmp
-ExecStart=/usr/local/bin/aisrelay --listen 10110 --broadcast 2947 --publish-endpoints 5.9.207.224:11089|
+ExecStart=/usr/local/bin/aisrelay --listen 10110 --broadcast 2947 --publish-endpoints udp://5.9.207.224:11089
 Restart=always
 # Restart service after 10 seconds if the dotnet service crashes:
 RestartSec=10
