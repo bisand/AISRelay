@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall -lboost_program_options -lboost_system -lboost_regex -pthread
+CXXFLAGS = -v -lboost_program_options -lboost_system -lboost_regex -pthread
 LDFLAGS =
 
 ifeq ($(PREFIX),)

@@ -10,7 +10,7 @@
       "request": "launch",
       "program": "${workspaceFolder}/bin/aisrelay",
       "args": [/*"-p", "udp://test.biseth.net:1234"*/],
-      "stopAtEntry": true,
+      "stopAtEntry": false,
       "cwd": "${workspaceFolder}/bin",
       "environment": [],
       "externalConsole": false,

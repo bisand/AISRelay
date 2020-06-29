@@ -25,6 +25,8 @@
                 "${workspaceFolder}/src/*.cpp",
                 "-o",
                 "${workspaceFolder}/bin/aisrelay",
+                "-v",
+                "-g",
                 "-Wall",
                 "-lboost_system",
                 "-lboost_program_options",
