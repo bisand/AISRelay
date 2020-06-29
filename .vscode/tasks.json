@@ -19,7 +19,7 @@
         },
         {
             "type": "shell",
-            "label": "C/C++: g++ build active file",
+            "label": "g++ build",
             "command": "/usr/bin/g++",
             "args": [
                 "${workspaceFolder}/src/*.cpp",

@@ -1,10 +1,10 @@
 #include "ais_relay.hpp"
 
-ais_relay::ais_relay(int listen_port, int broadcast_port, std::vector<std::string> udp_endpoint_addresses)
+ais_relay::ais_relay(int listen_port, int broadcast_port, std::vector<std::string> publish_endpoint_addresses)
 {
     _listen_port = listen_port;
     _broadcast_port = broadcast_port;
-    _udp_endpoint_addresses = udp_endpoint_addresses;
+    _publish_endpoint_addresses = publish_endpoint_addresses;
 
     boost::asio::io_service io_service;
 
@@ -21,24 +21,32 @@ ais_relay::ais_relay(int listen_port, int broadcast_port, std::vector<std::strin
     _broadcast_socket->open(udp::v4());
     _broadcast_socket->set_option(boost::asio::socket_base::broadcast(true));
 
-    for (size_t i = 0; i < _udp_endpoint_addresses.size(); i++)
+    for (size_t i = 0; i < _publish_endpoint_addresses.size(); i++)
     {
-        std::string url = _udp_endpoint_addresses[i];
-        boost::regex ex("^(?<protocol>(udp|tcp))://((?<subdomain>[a-z0-9]{0,10}.{1}){0,2}(?<domain>[a-z0-9]{1,30}){1}.{1}(?<extension>[a-z]{1,10}){1}|(?<ipaddress>([0-9.]{2,5}){3,8}))(?<port>:[0-9]{1,6}){0,1}$");
-        boost::smatch what;
-        if (regex_match(url, what, ex))
+        std::string url = _publish_endpoint_addresses[i];
+        boost::xpressive::sregex rx = boost::xpressive::sregex::compile("^(?P<protocol>udp|tcp)?(?:://)?(?P<host>[a-z0-9.]+)(?::(?P<port>[0-9]{1,5}))?");
+        boost::xpressive::smatch what;
+        if (boost::xpressive::regex_search(url, what, rx))
         {
-            auto matches = what.begin();
-            for (size_t j = 0; j < what.size(); j++)
+            std::string protocol = "udp";
+            std::string host = what["host"];
+            int port = 2947;
+
+            if (what["protocol"].matched)
+                protocol = what["protocol"];
+            if (what["port"].matched)
+                port = boost::lexical_cast<int>(what["port"]);
+
+            // ONly UDP support
+            if (protocol == "udp")
             {
-                std::cout << "Publish to " << i << matches[j] << std::endl;
+                udp::resolver resolver(io_service);
+                udp::resolver::query query(udp::v4(), host, boost::lexical_cast<std::string>(port));
+                udp::endpoint peb = *resolver.resolve(query);
+                _publish_endpoints.push_back(peb);
+
+                std::cout << "Publishing to " << protocol << "," << host << "," << port << std::endl;
             }
-            
-            // boost::asio::ip::address address = boost::asio::ip::address::from_string(what[2]);
-            // int port = boost::lexical_cast<int>(what[3].str());
-            // boost::asio::ip::udp::endpoint publish_endpoint(address, port);
-            // _udp_endpoints.push_back(publish_endpoint);
-            // std::cout << "Publish to " << publish_endpoint << std::endl;
         }
     }
 }
@@ -49,6 +57,8 @@ ais_relay::~ais_relay()
     delete _listen_socket;
     delete _broadcast_endpoint;
     delete _local_endpoint;
+    _publish_endpoints.clear();
+    _publish_endpoint_addresses.clear();
 }
 
 void ais_relay::start()
@@ -56,16 +66,18 @@ void ais_relay::start()
     _running = true;
     try
     {
+        std::cout << "Starting..." << std::endl;
         while (_running)
         {
             boost::array<char, 1024> recv_buf;
+            std::cout << "Listening..." << std::endl;
             size_t len = _listen_socket->receive(boost::asio::buffer(recv_buf));
             std::cout.write(recv_buf.data(), len);
             _broadcast_socket->send_to(boost::asio::buffer(recv_buf), *_broadcast_endpoint);
-            for (size_t i = 0; i < _udp_endpoints.size(); i++)
+            for (size_t i = 0; i < _publish_endpoints.size(); i++)
             {
                 boost::asio::io_service io_service;
-                udp::endpoint publish_endpoint = _udp_endpoints[i];
+                udp::endpoint publish_endpoint = _publish_endpoints[i];
                 udp::socket publish_socket(io_service);
                 publish_socket.send_to(boost::asio::buffer(recv_buf), publish_endpoint);
             }
