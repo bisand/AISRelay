@@ -78,7 +78,9 @@ void ais_relay::start()
                 boost::asio::io_service io_service;
                 udp::endpoint publish_endpoint = _publish_endpoints[i];
                 udp::socket publish_socket(io_service);
+                publish_socket.open();
                 publish_socket.send_to(boost::asio::buffer(recv_buf), publish_endpoint);
+                publish_socket.close();
             }
         }
     }

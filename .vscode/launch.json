@@ -9,7 +9,14 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/bin/aisrelay",
-      "args": [/*"-p", "udp://test.biseth.net:1234"*/],
+      "args": [
+        "-l",
+        "2947",
+        "-b",
+        "-2948",
+        "-p",
+        "udp://5.9.207.224:11089"
+      ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}/bin",
       "environment": [],
@@ -22,7 +29,7 @@
           "ignoreFailures": true
         }
       ],
-      "preLaunchTask": "g++ build",
+      // "preLaunchTask": "g++ build",
       "miDebuggerPath": "/usr/bin/gdb"
     },
     {
