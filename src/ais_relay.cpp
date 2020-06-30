@@ -9,7 +9,7 @@ ais_relay::ais_relay(int listen_port, int broadcast_port, std::vector<std::strin
 
     boost::asio::io_service io_service;
 
-    _local_endpoint = new boost::asio::ip::udp::endpoint(boost::asio::ip::address::from_string("0.0.0.0"), boost::lexical_cast<int>(_listen_port));
+    _local_endpoint = new boost::asio::ip::udp::endpoint(boost::asio::ip::address_v4::any(), boost::lexical_cast<int>(_listen_port));
     _broadcast_endpoint = new boost::asio::ip::udp::endpoint(boost::asio::ip::address_v4::broadcast(), boost::lexical_cast<int>(_broadcast_port));
     if (_debug)
     {
