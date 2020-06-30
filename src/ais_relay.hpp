@@ -12,6 +12,7 @@ class ais_relay
 {
 private:
     bool _running;
+    bool _debug;
 
     int _listen_port;
     int _broadcast_port;
@@ -26,7 +27,7 @@ private:
     std::vector<udp::endpoint> _publish_endpoints;
 
 public:
-    ais_relay(int listen_port, int broadcast_port, std::vector<std::string> udp_endpoint_addresses);
+    ais_relay(int listen_port, int broadcast_port, std::vector<std::string> udp_endpoint_addresses, bool debug = false);
     ~ais_relay();
 
     void start();

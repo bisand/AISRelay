@@ -1,7 +1,8 @@
 #include "ais_relay.hpp"
 
-ais_relay::ais_relay(int listen_port, int broadcast_port, std::vector<std::string> publish_endpoint_addresses)
+ais_relay::ais_relay(int listen_port, int broadcast_port, std::vector<std::string> publish_endpoint_addresses, bool debug)
 {
+    _debug = debug;
     _listen_port = listen_port;
     _broadcast_port = broadcast_port;
     _publish_endpoint_addresses = publish_endpoint_addresses;
@@ -10,9 +11,11 @@ ais_relay::ais_relay(int listen_port, int broadcast_port, std::vector<std::strin
 
     _local_endpoint = new boost::asio::ip::udp::endpoint(boost::asio::ip::address::from_string("0.0.0.0"), boost::lexical_cast<int>(_listen_port));
     _broadcast_endpoint = new boost::asio::ip::udp::endpoint(boost::asio::ip::address_v4::broadcast(), boost::lexical_cast<int>(_broadcast_port));
-    std::cout << "Local bind " << *_local_endpoint << std::endl;
-    std::cout << "Broadcast to " << *_broadcast_endpoint << std::endl;
-
+    if (_debug)
+    {
+        std::cout << "Local bind " << *_local_endpoint << std::endl;
+        std::cout << "Broadcast to " << *_broadcast_endpoint << std::endl;
+    }
     _listen_socket = new udp::socket(io_service);
     _listen_socket->open(udp::v4());
     _listen_socket->bind(*_local_endpoint);
@@ -41,38 +44,31 @@ ais_relay::ais_relay(int listen_port, int broadcast_port, std::vector<std::strin
             if (protocol == "udp")
             {
                 std::string port_num = boost::lexical_cast<std::string>(port);
-                boost::asio::io_service ios;
                 boost::asio::ip::udp::resolver::query resolver_query(host, port_num, boost::asio::ip::udp::resolver::query::numeric_service);
-                boost::asio::ip::udp::resolver resolver(ios);
+                boost::asio::ip::udp::resolver resolver(io_service);
                 boost::system::error_code ec;
                 boost::asio::ip::udp::resolver::iterator it = resolver.resolve(resolver_query, ec);
 
                 if (ec.value() != 0)
                 {
-                    // Failed to resolve the DNS name. Breaking execution.
                     std::cout << "Failed to resolve a DNS name."
                               << "Error code = " << ec.value()
                               << ". Message = " << ec.message();
-
-                    return;
+                    throw 404;
                 }
 
                 boost::asio::ip::udp::resolver::iterator it_end;
 
                 for (; it != it_end; ++it)
                 {
-                    // Here we can access the endpoint like this.
                     boost::asio::ip::udp::endpoint ep = it->endpoint();
                     _publish_endpoints.push_back(ep);
                 }
 
-                // udp::resolver resolver(io_service);
-                // udp::resolver::query query(udp::v4(), host, boost::lexical_cast<std::string>(port));
-                // udp::endpoint peb = *resolver.resolve(query);
-
-                // _publish_endpoints.push_back(peb);
-
-                std::cout << "Publishing to " << protocol << "," << host << "," << port << std::endl;
+                if (_debug)
+                {
+                    std::cout << "Publishing to " << protocol << "," << host << "," << port << std::endl;
+                }
             }
         }
     }
@@ -80,6 +76,8 @@ ais_relay::ais_relay(int listen_port, int broadcast_port, std::vector<std::strin
 
 ais_relay::~ais_relay()
 {
+    _broadcast_socket->close();
+    _listen_socket->close();
     delete _broadcast_socket;
     delete _listen_socket;
     delete _broadcast_endpoint;
@@ -93,12 +91,14 @@ void ais_relay::start()
     _running = true;
     try
     {
-        std::cout << "Starting..." << std::endl;
+        if (_debug)
+            std::cout << "Starting..." << std::endl;
+        boost::array<char, 1024> recv_buf;
         while (_running)
         {
-            boost::array<char, 1024> recv_buf;
             size_t len = _listen_socket->receive(boost::asio::buffer(recv_buf));
-            std::cout.write(recv_buf.data(), len);
+            if (_debug)
+                std::cout.write(recv_buf.data(), len);
             _broadcast_socket->send_to(boost::asio::buffer(recv_buf), *_broadcast_endpoint);
             for (size_t i = 0; i < _publish_endpoints.size(); i++)
             {
