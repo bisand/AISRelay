@@ -96,6 +96,7 @@ void ais_relay::start()
         while (_running)
         {
             boost::array<char, 1024> recv_buf;
+            recv_buf.fill(0);
             size_t len = _listen_socket->receive(boost::asio::buffer(recv_buf));
             if (_debug)
                 std::cout.write(recv_buf.data(), len);

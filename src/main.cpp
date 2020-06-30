@@ -55,7 +55,11 @@ int main(int argc, char **argv)
         publish_endpoint_addresses = vm["publish-endpoints"].as<std::vector<std::string>>();
     }
 
-    ais_relay aisrelay(listen_port, broadcast_port, publish_endpoint_addresses, debug);
-    aisrelay.start();
+    while (true)
+    {
+        ais_relay aisrelay(listen_port, broadcast_port, publish_endpoint_addresses, debug);
+        aisrelay.start();
+        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+    }
     return 0;
 }
