@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Starting AIS installation..."
 
@@ -8,31 +8,44 @@ cp -R . /tmp/aisrelay
 cd /tmp/aisrelay
 
 # Install prerequisites.
-apt install -y git cmake build-essential libusb-1.0-0-dev libboost-system-dev libboost-program-options-dev
+echo "Installing prerequisites..."
+apt install -y git cmake build-essential libusb-1.0-0-dev libboost-system-dev libboost-program-options-dev &>> /tmp/aisrelay.log
 
 # Clone and install RTL-SDR
-git clone git://git.osmocom.org/rtl-sdr.git
+echo "Building and installing RTL-SRD. This could take several minutes..."
+git clone git://git.osmocom.org/rtl-sdr.git &>> /tmp/aisrelay.log
 cd rtl-sdr/
 mkdir build
 cd build
-cmake ../ -DINSTALL_UDEV_RULES=ON
-make
-sudo make install
-sudo ldconfig
+cmake ../ -DINSTALL_UDEV_RULES=ON &>> /tmp/aisrelay.log
+make &>> /tmp/aisrelay.log
+sudo make install &>> /tmp/aisrelay.log
+sudo ldconfig &>> /tmp/aisrelay.log
 cd ../..
+echo "Done."
 
+echo "Building and installing RTL-AIS. This could take several minutes..."
 # Adding include and lib path to prevent build errors on rtl-ais
 sed -i.bak 's/^\(prefix=\).*/\1\/usr/' /usr/local/lib/pkgconfig/librtlsdr.pc
 sed -i.bak 's/^\(libdir=\).*/\1${prefix}\/lib/' /usr/local/lib/pkgconfig/librtlsdr.pc
 sed -i.bak 's/^\(includedir=\).*/\1${prefix}\/include/' /usr/local/lib/pkgconfig/librtlsdr.pc
 
 # Clone and install RTL-AIS
-git clone https://github.com/dgiardini/rtl-ais 
+git clone https://github.com/dgiardini/rtl-ais &>> /tmp/aisrelay.log
 cd rtl-ais
-make
-make install
+make &>> /tmp/aisrelay.log
+make install &>> /tmp/aisrelay.log
 cd ..
+echo "Done."
 
+echo "Building and installing AISRelay. This may take up to 30 minutes on slow systems..."
+cd src
+make &>> /tmp/aisrelay.log
+make install &>> /tmp/aisrelay.log
+cd ..
+echo "Done."
+
+echo "Creating and starting services..."
 # Create rtl_ais service
 cat > /etc/systemd/system/rtl_ais.service << EOF
 [Unit]
@@ -78,10 +91,15 @@ WantedBy=multi-user.target
 EOF
 
 # Enable and start services.
-systemctl enable rtl_ais
-systemctl enable aisrelay
-systemctl start rtl_ais
-systemctl start aisrelay
+systemctl enable rtl_ais &>> /tmp/aisrelay.log
+systemctl enable aisrelay &>> /tmp/aisrelay.log
+systemctl start rtl_ais &>> /tmp/aisrelay.log
+systemctl start aisrelay &>> /tmp/aisrelay.log
+echo "Done."
 
 # Cleaning up
-rm -Rf /tmp/aisrelay
+echo "Cleaning up..."
+rm -Rf /tmp/aisrelay &>> /tmp/aisrelay.log
+echo "Done."
+echo "Installation complete!"
+echo "See log file for more info (/tmp/aisrelay.log)"
