@@ -147,8 +147,8 @@ EOF
 # Enable and start services.
 systemctl enable rtl_ais &>>/tmp/aisrelay.log
 systemctl enable aisrelay &>>/tmp/aisrelay.log
-systemctl start rtl_ais &>>/tmp/aisrelay.log
-systemctl start aisrelay &>>/tmp/aisrelay.log
+systemctl restart rtl_ais &>>/tmp/aisrelay.log
+systemctl restart aisrelay &>>/tmp/aisrelay.log
 echo "Done."
 
 # Cleaning up
