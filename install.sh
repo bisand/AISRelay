@@ -70,7 +70,7 @@ EOF
 # Create AIS Relay service
 cat > /etc/systemd/system/aisrelay.service << EOF
 [Unit]
-Description=AIS Relay for broadcasting AIS messages to local network and MarineTraffic.com
+Description=AIS Relay for broadcasting AIS messages to local network and multiple external UDP and TCP endpoints like MarineTraffic.
 After=network.target
 StartLimitIntervalSec=0
 
