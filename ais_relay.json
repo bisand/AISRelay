@@ -1,0 +1,56 @@
+[
+  {
+    "id": "3dcf0172.95e15e",
+    "type": "tab",
+    "label": "AIS Relay",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "2b73ee71.1247d2",
+    "type": "udp in",
+    "z": "3dcf0172.95e15e",
+    "name": "",
+    "iface": "",
+    "port": "11010",
+    "ipv": "udp4",
+    "multicast": "false",
+    "group": "",
+    "datatype": "buffer",
+    "x": 130,
+    "y": 80,
+    "wires": [["38e86bbb.85f764", "d11065b5.b0e508"]]
+  },
+  {
+    "id": "38e86bbb.85f764",
+    "type": "udp out",
+    "z": "3dcf0172.95e15e",
+    "name": "",
+    "addr": "",
+    "iface": "",
+    "port": "2947",
+    "ipv": "udp4",
+    "outport": "",
+    "base64": false,
+    "multicast": "broad",
+    "x": 360,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "d11065b5.b0e508",
+    "type": "udp out",
+    "z": "3dcf0172.95e15e",
+    "name": "",
+    "addr": "",
+    "iface": "",
+    "port": "2948",
+    "ipv": "udp4",
+    "outport": "",
+    "base64": false,
+    "multicast": "broad",
+    "x": 360,
+    "y": 140,
+    "wires": []
+  }
+]

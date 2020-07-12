@@ -120,7 +120,11 @@ chmod +x update-nodejs-and-nodered.sh
 
 flow_id=$(curl -sL http://localhost:1880/flows | jq -r '.[] | select(select(.type=="tab").label=="AIS Relay").id')
 if [ -z "$flow_id" ]; then
-    echo "\$flow_id is empty"
+    echo "\$flow_id is empty. Adding AIS Relay flow."
+    curl --header "Content-Type: application/json" \
+    --request POST \
+    --data @ais_relay.json \
+    http://localhost:1880/flow
 else
     echo "\$flow_id is NOT empty: ${flow_id}"
 fi
