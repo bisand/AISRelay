@@ -107,7 +107,7 @@ chmod +x update-nodejs-and-nodered.sh
 
 echo "Creating and starting services..."
 # Create rtl_ais service
-sudo cat >/etc/systemd/system/rtl_ais.service <<EOF
+sudo sh -c "cat >/etc/systemd/system/rtl_ais.service <<EOF
 [Unit]
 Description=rtl_ais, A simple AIS tuner and generic dual-frequency FM demodulator
 After=network.target
@@ -125,10 +125,10 @@ User=www-data
 
 [Install]
 WantedBy=multi-user.target
-EOF
+EOF"
 
 # Create AIS Relay service
-sudo cat >/etc/systemd/system/aisrelay.service <<EOF
+sudo sh -c "cat >/etc/systemd/system/aisrelay.service <<EOF
 [Unit]
 Description=AIS Relay for broadcasting AIS messages to local network and multiple external UDP and TCP endpoints like MarineTraffic.
 After=network.target
@@ -148,7 +148,7 @@ Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 
 [Install]
 WantedBy=multi-user.target
-EOF
+EOF"
 
 # Enable and start services.
 sudo systemctl enable rtl_ais &>>/tmp/aisrelay.log
