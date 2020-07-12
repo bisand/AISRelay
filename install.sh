@@ -1,16 +1,16 @@
 #!/bin/bash
 
-if [ "$EUID" == "0" ]
-  then echo -en "\nRoot user detected. Typically install as a normal user. No need for sudo.\r\n\r\n"
+if [ "$EUID" == "0" ]; then
+    echo -en "\nRoot user detected. Typically install as a normal user. No need for sudo.\r\n\r\n"
 
-  read -p "Are you really sure you want to install as root ? (y/N) ? " yn
-  case $yn in
-    [Yy]* )
-    ;;
-    * )
-      exit
-    ;;
-  esac
+    read -p "Are you really sure you want to install as root ? (y/N) ? " yn
+    case $yn in
+    [Yy]*) ;;
+
+    *)
+        exit
+        ;;
+    esac
 fi
 
 remove_whitespace() {
@@ -114,9 +114,16 @@ if [[ "${do_install}" == "true" ]]; then
 fi
 
 echo "Installing Node-Red and dependencies..."
-curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered > update-nodejs-and-nodered.sh
+curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered >update-nodejs-and-nodered.sh
 chmod +x update-nodejs-and-nodered.sh
 ./update-nodejs-and-nodered.sh
+
+flow_id=$(curl -sL http://localhost:1880/flows | jq '.[] | select(select(.type=="tab").label=="AIS Relay").id')
+if [ -z "$var" ]; then
+    echo "\$flow_id is empty"
+else
+    echo "\$flow_id is NOT empty: ${flow_id}"
+fi
 
 echo "Creating and starting services..."
 # Create rtl_ais service
