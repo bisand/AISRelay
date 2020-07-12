@@ -1,5 +1,18 @@
 #!/bin/bash
 
+if [ "$EUID" == "0" ]
+  then echo -en "\nRoot user detected. Typically install as a normal user. No need for sudo.\r\n\r\n"
+
+  read -p "Are you really sure you want to install as root ? (y/N) ? " yn
+  case $yn in
+    [Yy]* )
+    ;;
+    * )
+      exit
+    ;;
+  esac
+fi
+
 remove_whitespace() {
     local var="$1"
     # remove leading whitespace characters
