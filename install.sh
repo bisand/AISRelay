@@ -62,7 +62,7 @@ cd /tmp/aisrelay
 if [[ "${do_install}" == "true" ]]; then
     # Install prerequisites.
     echo "Installing prerequisites..."
-    apt install -y git cmake build-essential libusb-1.0-0-dev libboost-system-dev libboost-program-options-dev &>>/tmp/aisrelay.log
+    sudo apt install -y git cmake build-essential libusb-1.0-0-dev jq libboost-system-dev libboost-program-options-dev &>>/tmp/aisrelay.log
 
     # Clone and install RTL-SDR
     echo "Building and installing RTL-SRD. This could take several minutes..."
@@ -79,15 +79,15 @@ if [[ "${do_install}" == "true" ]]; then
 
     echo "Building and installing RTL-AIS. This could take several minutes..."
     # Adding include and lib path to prevent build errors on rtl-ais
-    sed -i.bak 's/^\(prefix=\).*/\1\/usr/' /usr/local/lib/pkgconfig/librtlsdr.pc
-    sed -i.bak 's/^\(libdir=\).*/\1${prefix}\/lib/' /usr/local/lib/pkgconfig/librtlsdr.pc
-    sed -i.bak 's/^\(includedir=\).*/\1${prefix}\/include/' /usr/local/lib/pkgconfig/librtlsdr.pc
+    sudo sed -i.bak 's/^\(prefix=\).*/\1\/usr/' /usr/local/lib/pkgconfig/librtlsdr.pc
+    sudo sed -i.bak 's/^\(libdir=\).*/\1${prefix}\/lib/' /usr/local/lib/pkgconfig/librtlsdr.pc
+    sudo sed -i.bak 's/^\(includedir=\).*/\1${prefix}\/include/' /usr/local/lib/pkgconfig/librtlsdr.pc
 
     # Clone and install RTL-AIS
     git clone https://github.com/dgiardini/rtl-ais &>>/tmp/aisrelay.log
     cd rtl-ais
     make &>>/tmp/aisrelay.log
-    make install &>>/tmp/aisrelay.log
+    sudo make install &>>/tmp/aisrelay.log
     cd ..
     echo "Done."
 
@@ -106,7 +106,7 @@ fi
 
 echo "Creating and starting services..."
 # Create rtl_ais service
-cat >/etc/systemd/system/rtl_ais.service <<EOF
+sudo cat >/etc/systemd/system/rtl_ais.service <<EOF
 [Unit]
 Description=rtl_ais, A simple AIS tuner and generic dual-frequency FM demodulator
 After=network.target
@@ -127,7 +127,7 @@ WantedBy=multi-user.target
 EOF
 
 # Create AIS Relay service
-cat >/etc/systemd/system/aisrelay.service <<EOF
+sudo cat >/etc/systemd/system/aisrelay.service <<EOF
 [Unit]
 Description=AIS Relay for broadcasting AIS messages to local network and multiple external UDP and TCP endpoints like MarineTraffic.
 After=network.target
@@ -150,9 +150,9 @@ WantedBy=multi-user.target
 EOF
 
 # Enable and start services.
-systemctl enable rtl_ais &>>/tmp/aisrelay.log
+sudo systemctl enable rtl_ais &>>/tmp/aisrelay.log
 #systemctl enable aisrelay &>>/tmp/aisrelay.log
-systemctl restart rtl_ais &>>/tmp/aisrelay.log
+sudo systemctl restart rtl_ais &>>/tmp/aisrelay.log
 #systemctl restart aisrelay &>>/tmp/aisrelay.log
 echo "Done."
 
