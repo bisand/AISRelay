@@ -91,12 +91,17 @@ if [[ "${do_install}" == "true" ]]; then
     cd ..
     echo "Done."
 
-    echo "Building and installing AISRelay. This may take up to 30 minutes on slow systems..."
-    cd src
-    make &>>/tmp/aisrelay.log
-    make install &>>/tmp/aisrelay.log
-    cd ..
-    echo "Done."
+    #echo "Building and installing AISRelay. This may take up to 30 minutes on slow systems..."
+    #cd src
+    #make &>>/tmp/aisrelay.log
+    #make install &>>/tmp/aisrelay.log
+    #cd ..
+    #echo "Done."
+
+    curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered > update-nodejs-and-nodered.sh
+    chmod +x update-nodejs-and-nodered.sh
+    update-nodejs-and-nodered.sh
+
 fi
 
 echo "Creating and starting services..."
@@ -146,9 +151,9 @@ EOF
 
 # Enable and start services.
 systemctl enable rtl_ais &>>/tmp/aisrelay.log
-systemctl enable aisrelay &>>/tmp/aisrelay.log
+#systemctl enable aisrelay &>>/tmp/aisrelay.log
 systemctl restart rtl_ais &>>/tmp/aisrelay.log
-systemctl restart aisrelay &>>/tmp/aisrelay.log
+#systemctl restart aisrelay &>>/tmp/aisrelay.log
 echo "Done."
 
 # Cleaning up

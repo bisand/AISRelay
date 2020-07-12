@@ -1,0 +1,389 @@
+[
+  {
+    "id": "b74d258.a8340d8",
+    "type": "tab",
+    "label": "Flow 1",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "3dcf0172.95e15e",
+    "type": "tab",
+    "label": "AIS Relay",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "1b276c28.613ee4",
+    "type": "ui_tab",
+    "z": "",
+    "name": "Home",
+    "icon": "dashboard",
+    "order": 1,
+    "disabled": false,
+    "hidden": false
+  },
+  {
+    "id": "8a88d916.970c48",
+    "type": "ui_group",
+    "z": "",
+    "name": "Default",
+    "tab": "1b276c28.613ee4",
+    "order": 1,
+    "disp": true,
+    "width": "10",
+    "collapse": true
+  },
+  {
+    "id": "ca673a2b.fb5958",
+    "type": "ui_base",
+    "theme": {
+      "name": "theme-dark",
+      "lightTheme": {
+        "default": "#0094CE",
+        "baseColor": "#0094CE",
+        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+        "edited": true,
+        "reset": false
+      },
+      "darkTheme": {
+        "default": "#097479",
+        "baseColor": "#097479",
+        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+        "edited": true,
+        "reset": false
+      },
+      "customTheme": {
+        "name": "Untitled Theme 1",
+        "default": "#4B7930",
+        "baseColor": "#4B7930",
+        "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+        "reset": false
+      },
+      "themeState": {
+        "base-color": {
+          "default": "#097479",
+          "value": "#097479",
+          "edited": false
+        },
+        "page-titlebar-backgroundColor": {
+          "value": "#097479",
+          "edited": false
+        },
+        "page-backgroundColor": { "value": "#111111", "edited": false },
+        "page-sidebar-backgroundColor": { "value": "#000000", "edited": false },
+        "group-textColor": { "value": "#0eb8c0", "edited": false },
+        "group-borderColor": { "value": "#555555", "edited": false },
+        "group-backgroundColor": { "value": "#333333", "edited": false },
+        "widget-textColor": { "value": "#eeeeee", "edited": false },
+        "widget-backgroundColor": { "value": "#097479", "edited": false },
+        "widget-borderColor": { "value": "#333333", "edited": false },
+        "base-font": {
+          "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+        }
+      },
+      "angularTheme": {
+        "primary": "indigo",
+        "accents": "blue",
+        "warn": "red",
+        "background": "grey"
+      }
+    },
+    "site": {
+      "name": "Node-RED Dashboard",
+      "hideToolbar": "false",
+      "allowSwipe": "false",
+      "lockMenu": "false",
+      "allowTempTheme": "false",
+      "dateFormat": "DD/MM/YYYY",
+      "sizes": {
+        "sx": 48,
+        "sy": 48,
+        "gx": 6,
+        "gy": 6,
+        "cx": 6,
+        "cy": 6,
+        "px": 0,
+        "py": 0
+      }
+    }
+  },
+  {
+    "id": "378a9009.2fd05",
+    "type": "ui_tab",
+    "z": "",
+    "name": "Test",
+    "icon": "dashboard",
+    "order": 2,
+    "disabled": false,
+    "hidden": false
+  },
+  {
+    "id": "8657c45d.187ee8",
+    "type": "ui_group",
+    "z": "",
+    "name": "Test",
+    "tab": "378a9009.2fd05",
+    "order": 2,
+    "disp": true,
+    "width": "6",
+    "collapse": false
+  },
+  {
+    "id": "8529fe46.edf14",
+    "type": "ui_spacer",
+    "name": "spacer",
+    "group": "8a88d916.970c48",
+    "order": 2,
+    "width": 1,
+    "height": 1
+  },
+  {
+    "id": "4e97f2f1.56b89c",
+    "type": "ui_group",
+    "z": "",
+    "name": "Group 2",
+    "tab": "378a9009.2fd05",
+    "order": 2,
+    "disp": true,
+    "width": "6",
+    "collapse": false
+  },
+  {
+    "id": "f97d8e7.f337b7",
+    "type": "ui_text",
+    "z": "b74d258.a8340d8",
+    "group": "8657c45d.187ee8",
+    "order": 0,
+    "width": "0",
+    "height": "0",
+    "name": "",
+    "label": "text",
+    "format": "{{msg.payload}}",
+    "layout": "col-center",
+    "x": 630,
+    "y": 160,
+    "wires": []
+  },
+  {
+    "id": "6822b821.dd6628",
+    "type": "udp in",
+    "z": "b74d258.a8340d8",
+    "name": "",
+    "iface": "",
+    "port": "2948",
+    "ipv": "udp4",
+    "multicast": "false",
+    "group": "0.0.0.0",
+    "datatype": "utf8",
+    "x": 160,
+    "y": 160,
+    "wires": [["50e062e7.8dd50c"]]
+  },
+  {
+    "id": "50e062e7.8dd50c",
+    "type": "ais",
+    "z": "b74d258.a8340d8",
+    "name": "",
+    "x": 400,
+    "y": 160,
+    "wires": [
+      ["e548708e.93dd4", "f97d8e7.f337b7", "36c4cc4c.832b64", "accec3df.f044b"]
+    ]
+  },
+  {
+    "id": "e548708e.93dd4",
+    "type": "debug",
+    "z": "b74d258.a8340d8",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "false",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 540,
+    "y": 260,
+    "wires": []
+  },
+  {
+    "id": "a9180cf.fb607f",
+    "type": "ui_text_input",
+    "z": "b74d258.a8340d8",
+    "name": "",
+    "label": "MMSI",
+    "tooltip": "",
+    "group": "8a88d916.970c48",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "passthru": false,
+    "mode": "number",
+    "delay": 300,
+    "topic": "",
+    "x": 770,
+    "y": 80,
+    "wires": [[]]
+  },
+  {
+    "id": "36c4cc4c.832b64",
+    "type": "function",
+    "z": "b74d258.a8340d8",
+    "name": "",
+    "func": "msg.payload = msg.payload.mmsi\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "x": 580,
+    "y": 80,
+    "wires": [["a9180cf.fb607f"]]
+  },
+  {
+    "id": "accec3df.f044b",
+    "type": "json",
+    "z": "b74d258.a8340d8",
+    "name": "",
+    "property": "payload",
+    "action": "obj",
+    "pretty": false,
+    "x": 560,
+    "y": 220,
+    "wires": [["523f0340.587e1c"]]
+  },
+  {
+    "id": "523f0340.587e1c",
+    "type": "function",
+    "z": "b74d258.a8340d8",
+    "name": "",
+    "func": "var payload = {\n    \"command\":\"addData\",\n    \"arguments\":[\n        msg.payload,\n        true\n    ],\n    \"returnPromise\":true\n    };\n    \nmsg.payload = payload;\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "x": 720,
+    "y": 220,
+    "wires": [["af71e556.85c378"]]
+  },
+  {
+    "id": "af71e556.85c378",
+    "type": "ui_table",
+    "z": "b74d258.a8340d8",
+    "group": "8a88d916.970c48",
+    "name": "",
+    "order": 3,
+    "width": "0",
+    "height": "0",
+    "columns": [
+      {
+        "field": "mmsi",
+        "title": "MMSI",
+        "width": "",
+        "align": "left",
+        "formatter": "plaintext",
+        "formatterParams": { "target": "_blank" }
+      },
+      {
+        "field": "navigationStatus",
+        "title": "Status",
+        "width": "",
+        "align": "left",
+        "formatter": "plaintext",
+        "formatterParams": { "target": "_blank" }
+      },
+      {
+        "field": "speedOverGround",
+        "title": "SOG",
+        "width": "",
+        "align": "left",
+        "formatter": "plaintext",
+        "formatterParams": { "target": "_blank" }
+      },
+      {
+        "field": "longitude",
+        "title": "Long",
+        "width": "",
+        "align": "left",
+        "formatter": "plaintext",
+        "formatterParams": { "target": "_blank" }
+      },
+      {
+        "field": "latitude",
+        "title": "Lat",
+        "width": "",
+        "align": "left",
+        "formatter": "plaintext",
+        "formatterParams": { "target": "_blank" }
+      },
+      {
+        "field": "courseOverGround",
+        "title": "COG",
+        "width": "",
+        "align": "left",
+        "formatter": "plaintext",
+        "formatterParams": { "target": "_blank" }
+      },
+      {
+        "field": "isoDate",
+        "title": "UTC",
+        "width": "",
+        "align": "left",
+        "formatter": "plaintext",
+        "formatterParams": { "target": "_blank" }
+      }
+    ],
+    "outputs": 0,
+    "cts": false,
+    "x": 890,
+    "y": 220,
+    "wires": []
+  },
+  {
+    "id": "2b73ee71.1247d2",
+    "type": "udp in",
+    "z": "3dcf0172.95e15e",
+    "name": "",
+    "iface": "",
+    "port": "11010",
+    "ipv": "udp4",
+    "multicast": "false",
+    "group": "",
+    "datatype": "buffer",
+    "x": 130,
+    "y": 80,
+    "wires": [["38e86bbb.85f764", "d11065b5.b0e508"]]
+  },
+  {
+    "id": "38e86bbb.85f764",
+    "type": "udp out",
+    "z": "3dcf0172.95e15e",
+    "name": "",
+    "addr": "",
+    "iface": "",
+    "port": "2947",
+    "ipv": "udp4",
+    "outport": "",
+    "base64": false,
+    "multicast": "broad",
+    "x": 360,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "d11065b5.b0e508",
+    "type": "udp out",
+    "z": "3dcf0172.95e15e",
+    "name": "",
+    "addr": "",
+    "iface": "",
+    "port": "2948",
+    "ipv": "udp4",
+    "outport": "",
+    "base64": false,
+    "multicast": "broad",
+    "x": 360,
+    "y": 140,
+    "wires": []
+  }
+]
