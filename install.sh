@@ -126,7 +126,7 @@ if [ -z "$flow_id" ]; then
     --data @ais_relay.json \
     http://localhost:1880/flow
 else
-    echo "\$flow_id is NOT empty: ${flow_id}"
+    echo "\$flow_id is NOT empty: ${flow_id}. Assuming flow exists."
 fi
 
 echo "Creating and starting services..."
