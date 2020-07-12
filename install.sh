@@ -100,7 +100,7 @@ if [[ "${do_install}" == "true" ]]; then
 
     curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered > update-nodejs-and-nodered.sh
     chmod +x update-nodejs-and-nodered.sh
-    update-nodejs-and-nodered.sh
+    ./update-nodejs-and-nodered.sh
 
 fi
 
