@@ -1,16 +1,13 @@
 {
+  "id": "20b24dfd.cdce52",
+  "label": "AIS Relay",
+  "disabled": false,
+  "info": "",
   "nodes": [
     {
-      "id": "3dcf0172.95e15e",
-      "type": "tab",
-      "label": "AIS Relay",
-      "disabled": false,
-      "info": ""
-    },
-    {
-      "id": "2b73ee71.1247d2",
+      "id": "bc3eef72.ea23d",
       "type": "udp in",
-      "z": "3dcf0172.95e15e",
+      "z": "20b24dfd.cdce52",
       "name": "",
       "iface": "",
       "port": "11010",
@@ -20,12 +17,12 @@
       "datatype": "buffer",
       "x": 130,
       "y": 80,
-      "wires": [["38e86bbb.85f764", "d11065b5.b0e508"]]
+      "wires": [["64ab39f0.eafee8", "341e0dd9.e35002"]]
     },
     {
-      "id": "38e86bbb.85f764",
+      "id": "64ab39f0.eafee8",
       "type": "udp out",
-      "z": "3dcf0172.95e15e",
+      "z": "20b24dfd.cdce52",
       "name": "",
       "addr": "",
       "iface": "",
@@ -39,9 +36,9 @@
       "wires": []
     },
     {
-      "id": "d11065b5.b0e508",
+      "id": "341e0dd9.e35002",
       "type": "udp out",
-      "z": "3dcf0172.95e15e",
+      "z": "20b24dfd.cdce52",
       "name": "",
       "addr": "",
       "iface": "",
