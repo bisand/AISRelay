@@ -98,11 +98,12 @@ if [[ "${do_install}" == "true" ]]; then
     #cd ..
     #echo "Done."
 
-    curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered > update-nodejs-and-nodered.sh
-    chmod +x update-nodejs-and-nodered.sh
-    ./update-nodejs-and-nodered.sh
-
 fi
+
+echo "Installing Node-Red and dependencies..."
+curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered > update-nodejs-and-nodered.sh
+chmod +x update-nodejs-and-nodered.sh
+./update-nodejs-and-nodered.sh
 
 echo "Creating and starting services..."
 # Create rtl_ais service
