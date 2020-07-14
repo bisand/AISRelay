@@ -10,7 +10,7 @@
       "z": "58735b77.94e804",
       "name": "",
       "iface": "",
-      "port": "${}",
+      "port": "${listen_port}",
       "ipv": "udp4",
       "multicast": "false",
       "group": "",
