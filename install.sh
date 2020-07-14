@@ -110,6 +110,9 @@ curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/
 chmod +x update-nodejs-and-nodered.sh
 ./update-nodejs-and-nodered.sh
 
+sudo systemctl enable nodered.service &>>/tmp/aisrelay.log
+sudo systemctl restart nodered.service &>>/tmp/aisrelay.log
+
 envsubst < ais_relay.json > ais_relay_replaced.json
 
 flow_id=$(curl -sL http://localhost:1880/flows | jq -r '.[] | select(select(.type=="tab").label=="AIS Relay").id')
