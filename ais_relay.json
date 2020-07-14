@@ -1,5 +1,5 @@
 {
-  "id": "20b24dfd.cdce52",
+  "id": "58735b77.94e804",
   "label": "AIS Relay",
   "disabled": false,
   "info": "",
@@ -7,22 +7,29 @@
     {
       "id": "bc3eef72.ea23d",
       "type": "udp in",
-      "z": "20b24dfd.cdce52",
+      "z": "58735b77.94e804",
       "name": "",
       "iface": "",
-      "port": "11010",
+      "port": "${}",
       "ipv": "udp4",
       "multicast": "false",
       "group": "",
       "datatype": "buffer",
-      "x": 130,
-      "y": 80,
-      "wires": [["64ab39f0.eafee8", "341e0dd9.e35002"]]
+      "x": 120,
+      "y": 180,
+      "wires": [
+        [
+          "64ab39f0.eafee8",
+          "341e0dd9.e35002",
+          "cae7f95.729ef08",
+          "53d912d.daf28ec"
+        ]
+      ]
     },
     {
       "id": "64ab39f0.eafee8",
       "type": "udp out",
-      "z": "20b24dfd.cdce52",
+      "z": "58735b77.94e804",
       "name": "",
       "addr": "",
       "iface": "",
@@ -38,7 +45,7 @@
     {
       "id": "341e0dd9.e35002",
       "type": "udp out",
-      "z": "20b24dfd.cdce52",
+      "z": "58735b77.94e804",
       "name": "",
       "addr": "",
       "iface": "",
@@ -49,6 +56,38 @@
       "multicast": "broad",
       "x": 360,
       "y": 140,
+      "wires": []
+    },
+    {
+      "id": "cae7f95.729ef08",
+      "type": "debug",
+      "z": "58735b77.94e804",
+      "name": "",
+      "active": true,
+      "tosidebar": true,
+      "console": false,
+      "tostatus": false,
+      "complete": "false",
+      "statusVal": "",
+      "statusType": "auto",
+      "x": 370,
+      "y": 280,
+      "wires": []
+    },
+    {
+      "id": "53d912d.daf28ec",
+      "type": "udp out",
+      "z": "58735b77.94e804",
+      "name": "MarineTraffic",
+      "addr": "5.9.207.224",
+      "iface": "",
+      "port": "11089",
+      "ipv": "udp4",
+      "outport": "",
+      "base64": false,
+      "multicast": "false",
+      "x": 370,
+      "y": 220,
       "wires": []
     }
   ]

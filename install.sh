@@ -126,7 +126,7 @@ if [ -z "$flow_id" ]; then
     --data @ais_relay.json \
     http://localhost:1880/flow
 else
-    echo "\$flow_id is NOT empty: ${flow_id}. Assuming flow exists."
+    echo "\$flow_id is NOT empty: ${flow_id}. Assuming flow exists. Nothing changed."
 fi
 
 echo "Creating and starting services..."
@@ -174,11 +174,13 @@ Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 WantedBy=multi-user.target
 EOF"
 
+# Stop an remove old aisrelay
+sudo systemctl stop aisrelay &>>/tmp/aisrelay.log
+sudo systemctl disable aisrelay &>>/tmp/aisrelay.log
+
 # Enable and start services.
 sudo systemctl enable rtl_ais &>>/tmp/aisrelay.log
-#systemctl enable aisrelay &>>/tmp/aisrelay.log
 sudo systemctl restart rtl_ais &>>/tmp/aisrelay.log
-#systemctl restart aisrelay &>>/tmp/aisrelay.log
 echo "Done."
 
 # Cleaning up
