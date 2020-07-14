@@ -22,6 +22,16 @@ remove_whitespace() {
     echo "$var"
 }
 
+wait-for-url() {
+    echo "Testing $1"
+    timeout -s TERM 45 bash -c \
+    'while [[ "$(curl -s -o /dev/null -L -w ''%{http_code}'' ${0})" != "200" ]];\
+    do echo "Waiting for ${0}" && sleep 2;\
+    done' ${1}
+    echo "OK!"
+    curl -I $1
+}
+
 echo "Starting AIS installation..."
 
 listen_port=11010
@@ -114,6 +124,8 @@ sudo systemctl enable nodered.service &>>/tmp/aisrelay.log
 sudo systemctl restart nodered.service &>>/tmp/aisrelay.log
 
 envsubst < ais_relay.json > ais_relay_replaced.json
+
+wait-for-url http://localhost:1880/flows
 
 flow_id=$(curl -sL http://localhost:1880/flows | jq -r '.[] | select(select(.type=="tab").label=="AIS Relay").id')
 if [ -z "$flow_id" ]; then
