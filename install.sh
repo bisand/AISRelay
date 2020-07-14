@@ -75,7 +75,7 @@ cd /tmp/aisrelay
 if [[ "${do_install}" == "true" ]]; then
     # Install prerequisites.
     echo "Installing prerequisites..."
-    sudo apt install -y git cmake build-essential libusb-1.0-0-dev jq libboost-system-dev libboost-program-options-dev &>>/tmp/aisrelay.log
+    sudo apt install -y git cmake build-essential libusb-1.0-0-dev jq &>>/tmp/aisrelay.log
 
     # Clone and install RTL-SDR
     echo "Building and installing RTL-SRD. This could take several minutes..."
@@ -103,14 +103,6 @@ if [[ "${do_install}" == "true" ]]; then
     sudo make install &>>/tmp/aisrelay.log
     cd ..
     echo "Done."
-
-    #echo "Building and installing AISRelay. This may take up to 30 minutes on slow systems..."
-    #cd src
-    #make &>>/tmp/aisrelay.log
-    #make install &>>/tmp/aisrelay.log
-    #cd ..
-    #echo "Done."
-
 fi
 
 echo "Installing Node-Red and dependencies..."
@@ -118,12 +110,14 @@ curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/
 chmod +x update-nodejs-and-nodered.sh
 ./update-nodejs-and-nodered.sh
 
+envsubst < ais_relay.json > ais_relay_replaced.json
+
 flow_id=$(curl -sL http://localhost:1880/flows | jq -r '.[] | select(select(.type=="tab").label=="AIS Relay").id')
 if [ -z "$flow_id" ]; then
     echo "\$flow_id is empty. Adding AIS Relay flow."
     curl --header "Content-Type: application/json" \
     --request POST \
-    --data @ais_relay.json \
+    --data @ais_relay_replaced.json \
     http://localhost:1880/flow
 else
     echo "\$flow_id is NOT empty: ${flow_id}. Assuming flow exists. Nothing changed."
@@ -151,7 +145,7 @@ User=www-data
 WantedBy=multi-user.target
 EOF"
 
-# Create AIS Relay service
+# Create AIS Relay service. Deprecated for now, but could resurface...
 sudo sh -c "cat >/etc/systemd/system/aisrelay.service <<EOF
 [Unit]
 Description=AIS Relay for broadcasting AIS messages to local network and multiple external UDP and TCP endpoints like MarineTraffic.

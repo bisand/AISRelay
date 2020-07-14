@@ -8,7 +8,7 @@
       "id": "bc3eef72.ea23d",
       "type": "udp in",
       "z": "58735b77.94e804",
-      "name": "",
+      "name": "UDP Listen",
       "iface": "",
       "port": "${listen_port}",
       "ipv": "udp4",
@@ -20,9 +20,7 @@
       "wires": [
         [
           "64ab39f0.eafee8",
-          "341e0dd9.e35002",
-          "cae7f95.729ef08",
-          "53d912d.daf28ec"
+          "cae7f95.729ef08"
         ]
       ]
     },
@@ -30,32 +28,16 @@
       "id": "64ab39f0.eafee8",
       "type": "udp out",
       "z": "58735b77.94e804",
-      "name": "",
+      "name": "UDP Broadcast",
       "addr": "",
       "iface": "",
-      "port": "2947",
+      "port": "${broadcast_port}",
       "ipv": "udp4",
       "outport": "",
       "base64": false,
       "multicast": "broad",
       "x": 360,
       "y": 80,
-      "wires": []
-    },
-    {
-      "id": "341e0dd9.e35002",
-      "type": "udp out",
-      "z": "58735b77.94e804",
-      "name": "",
-      "addr": "",
-      "iface": "",
-      "port": "2948",
-      "ipv": "udp4",
-      "outport": "",
-      "base64": false,
-      "multicast": "broad",
-      "x": 360,
-      "y": 140,
       "wires": []
     },
     {
@@ -72,22 +54,6 @@
       "statusType": "auto",
       "x": 370,
       "y": 280,
-      "wires": []
-    },
-    {
-      "id": "53d912d.daf28ec",
-      "type": "udp out",
-      "z": "58735b77.94e804",
-      "name": "MarineTraffic",
-      "addr": "5.9.207.224",
-      "iface": "",
-      "port": "11089",
-      "ipv": "udp4",
-      "outport": "",
-      "base64": false,
-      "multicast": "false",
-      "x": 370,
-      "y": 220,
       "wires": []
     }
   ]
