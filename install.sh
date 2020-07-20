@@ -154,7 +154,8 @@ Restart=always
 RestartSec=5
 KillSignal=SIGINT
 SyslogIdentifier=rtl_ais
-User=www-data
+# Uncomment line below to run service as www-data user instead of root.
+#User=www-data
 
 [Install]
 WantedBy=multi-user.target
@@ -175,7 +176,8 @@ Restart=always
 RestartSec=10
 KillSignal=SIGINT
 SyslogIdentifier=aisrelay
-User=www-data
+# Uncomment line below to run service as www-data user instead of root.
+#User=www-data
 Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 
